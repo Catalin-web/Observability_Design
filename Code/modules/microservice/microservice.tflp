@@ -1,0 +1,15 @@
+controller:
+  metrics:
+   enabled: true
+annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9113"
+    prometheus.io/scheme: http
+
+serverBlock: |-
+  server {
+    listen 0.0.0.0:8080;
+    location /${microservice_name} {
+      return 200 "Welcome to ${microservice_name}";
+    }
+  }

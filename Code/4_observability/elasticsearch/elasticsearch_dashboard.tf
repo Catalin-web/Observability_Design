@@ -1058,12 +1058,12 @@ resource "grafana_dashboard" "elasticsearch" {
         },
         {
           "current" : {
-            "text" : "elasticsearch",
-            "value" : "elasticsearch"
+            "text" : "microservice1-nginx",
+            "value" : "microservice1-nginx"
           },
           "hide" : 2,
           "name" : "ServiceName",
-          "query" : "elasticsearch",
+          "query" : "microservice1-nginx",
           "skipUrlSync" : true,
           "type" : "constant"
         }
@@ -1075,6 +1075,6 @@ resource "grafana_dashboard" "elasticsearch" {
     },
     "timepicker" : {},
     "timezone" : "browser",
-    "title" : "Elasticsearch"
+    "title" : "Microservice1"
   })
 }
