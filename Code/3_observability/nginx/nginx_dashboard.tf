@@ -38,8 +38,7 @@ resource "grafana_dashboard" "nginx" {
       },
       {
         "datasource" : {
-          "type" : "prometheus",
-          "uid" : "cei385naugtmoc"
+          "type" : "prometheus"
         },
         "fieldConfig" : {
           "defaults" : {
@@ -92,8 +91,7 @@ resource "grafana_dashboard" "nginx" {
         "targets" : [
           {
             "datasource" : {
-              "type" : "prometheus",
-              "uid" : "cei385naugtmoc"
+              "type" : "prometheus"
             },
             "editorMode" : "code",
             "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"memory\", unit=\"byte\"}",
@@ -103,8 +101,7 @@ resource "grafana_dashboard" "nginx" {
           },
           {
             "datasource" : {
-              "type" : "prometheus",
-              "uid" : "cei385naugtmoc"
+              "type" : "prometheus"
             },
             "editorMode" : "code",
             "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"memory\", unit=\"byte\"}",
@@ -120,8 +117,7 @@ resource "grafana_dashboard" "nginx" {
       },
       {
         "datasource" : {
-          "type" : "prometheus",
-          "uid" : "cei385naugtmoc"
+          "type" : "prometheus"
         },
         "fieldConfig" : {
           "defaults" : {
@@ -173,8 +169,7 @@ resource "grafana_dashboard" "nginx" {
         "targets" : [
           {
             "datasource" : {
-              "type" : "prometheus",
-              "uid" : "cei385naugtmoc"
+              "type" : "prometheus"
             },
             "editorMode" : "code",
             "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"cpu\", unit=\"core\"}",
@@ -184,8 +179,7 @@ resource "grafana_dashboard" "nginx" {
           },
           {
             "datasource" : {
-              "type" : "prometheus",
-              "uid" : "cei385naugtmoc"
+              "type" : "prometheus"
             },
             "editorMode" : "code",
             "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"cpu\", unit=\"core\"}",
@@ -201,8 +195,7 @@ resource "grafana_dashboard" "nginx" {
       },
       {
         "datasource" : {
-          "type" : "prometheus",
-          "uid" : "cei385naugtmoc"
+          "type" : "prometheus"
         },
         "fieldConfig" : {
           "defaults" : {
@@ -255,8 +248,7 @@ resource "grafana_dashboard" "nginx" {
         "targets" : [
           {
             "datasource" : {
-              "type" : "prometheus",
-              "uid" : "cei385naugtmoc"
+              "type" : "prometheus"
             },
             "editorMode" : "code",
             "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"ephemeral_storage\", unit=\"byte\"}",
@@ -266,8 +258,7 @@ resource "grafana_dashboard" "nginx" {
           },
           {
             "datasource" : {
-              "type" : "prometheus",
-              "uid" : "cei385naugtmoc"
+              "type" : "prometheus"
             },
             "editorMode" : "code",
             "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"ephemeral_storage\", unit=\"byte\"}",
@@ -283,8 +274,7 @@ resource "grafana_dashboard" "nginx" {
       },
       {
         "datasource" : {
-          "type" : "prometheus",
-          "uid" : "cei385naugtmoc"
+          "type" : "prometheus"
         },
         "fieldConfig" : {
           "defaults" : {
@@ -368,8 +358,7 @@ resource "grafana_dashboard" "nginx" {
         "targets" : [
           {
             "datasource" : {
-              "type" : "prometheus",
-              "uid" : "cei385naugtmoc"
+              "type" : "prometheus"
             },
             "editorMode" : "code",
             "expr" : "sum(rate(container_cpu_usage_seconds_total{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"cpu\", unit=\"core\"}) ",
@@ -379,8 +368,7 @@ resource "grafana_dashboard" "nginx" {
           },
           {
             "datasource" : {
-              "type" : "prometheus",
-              "uid" : "cei385naugtmoc"
+              "type" : "prometheus"
             },
             "editorMode" : "code",
             "expr" : "sum(rate(container_memory_usage_bytes{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"memory\", unit=\"byte\"}) ",
@@ -396,8 +384,7 @@ resource "grafana_dashboard" "nginx" {
       },
       {
         "datasource" : {
-          "type" : "prometheus",
-          "uid" : "cei385naugtmoc"
+          "type" : "prometheus"
         },
         "fieldConfig" : {
           "defaults" : {
@@ -480,8 +467,7 @@ resource "grafana_dashboard" "nginx" {
         "targets" : [
           {
             "datasource" : {
-              "type" : "prometheus",
-              "uid" : "cei385naugtmoc"
+              "type" : "prometheus"
             },
             "editorMode" : "code",
             "expr" : "max(kube_pod_status_phase{pod=~\"$${ServiceName}.*\", service=\"kube-state-metrics\"}) by (phase)",
@@ -495,8 +481,7 @@ resource "grafana_dashboard" "nginx" {
       },
       {
         "datasource" : {
-          "type" : "prometheus",
-          "uid" : "cei385naugtmoc"
+          "type" : "prometheus"
         },
         "fieldConfig" : {
           "defaults" : {
@@ -579,8 +564,7 @@ resource "grafana_dashboard" "nginx" {
         "targets" : [
           {
             "datasource" : {
-              "type" : "prometheus",
-              "uid" : "cei385naugtmoc"
+              "type" : "prometheus"
             },
             "editorMode" : "code",
             "expr" : "sum(increase(kube_pod_init_container_status_restarts_total{service=\"kube-state-metrics\",pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint]))",

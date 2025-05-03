@@ -7,12 +7,5 @@ resource "grafana_data_source" "prometheus" {
 resource "grafana_data_source" "elasticsearch" {
   type = "elasticsearch"
   name = "logs"
-  url  = "https://elasticsearch-master.default.svc.cluster.local:9200"
-
-  basic_auth_enabled  = true
-  basic_auth_username = "elastic"
-
-  secure_json_data_encoded = jsonencode({
-    basicAuthPassword = "uVLhefdwI6RZzTSB"
-  })
+  url  = "http://elasticsearch-master-hl.default.svc.cluster.local:9200"
 }
