@@ -1,5 +1,5 @@
-resource "grafana_dashboard" "elasticsearch" {
-  folder = var.grafana_folder_uid
+resource "grafana_dashboard" "grafana" {
+  folder = grafana_folder.terraform_dashboards.uid
   config_json = jsonencode({
     "annotations" : {
       "list" : [
@@ -20,11 +20,11 @@ resource "grafana_dashboard" "elasticsearch" {
     "editable" : true,
     "fiscalYearStartMonth" : 0,
     "graphTooltip" : 0,
-    "id" : 2,
+    "id" : 3,
     "links" : [],
     "panels" : [
       {
-        "collapsed" : true,
+        "collapsed" : false,
         "gridPos" : {
           "h" : 1,
           "w" : 24,
@@ -32,408 +32,407 @@ resource "grafana_dashboard" "elasticsearch" {
           "y" : 0
         },
         "id" : 8,
-        "panels" : [
-          {
-            "datasource" : "logs",
-            "fieldConfig" : {
-              "defaults" : {
-                "color" : {
-                  "mode" : "palette-classic"
-                },
-                "custom" : {
-                  "axisBorderShow" : false,
-                  "axisCenteredZero" : false,
-                  "axisColorMode" : "text",
-                  "axisLabel" : "",
-                  "axisPlacement" : "auto",
-                  "barAlignment" : 0,
-                  "barWidthFactor" : 0.6,
-                  "drawStyle" : "line",
-                  "fillOpacity" : 0,
-                  "gradientMode" : "none",
-                  "hideFrom" : {
-                    "legend" : false,
-                    "tooltip" : false,
-                    "viz" : false
-                  },
-                  "insertNulls" : false,
-                  "lineInterpolation" : "linear",
-                  "lineWidth" : 1,
-                  "pointSize" : 5,
-                  "scaleDistribution" : {
-                    "type" : "linear"
-                  },
-                  "showPoints" : "auto",
-                  "spanNulls" : false,
-                  "stacking" : {
-                    "group" : "A",
-                    "mode" : "none"
-                  },
-                  "thresholdsStyle" : {
-                    "mode" : "off"
-                  }
-                },
-                "mappings" : [],
-                "thresholds" : {
-                  "mode" : "absolute",
-                  "steps" : [
-                    {
-                      "color" : "green"
-                    }
-                  ]
-                }
-              },
-              "overrides" : [
-                {
-                  "matcher" : {
-                    "id" : "byName",
-                    "options" : "_source"
-                  },
-                  "properties" : []
-                },
-                {
-                  "matcher" : {
-                    "id" : "byName",
-                    "options" : "kubernetes.container_name"
-                  },
-                  "properties" : []
-                }
-              ]
-            },
-            "gridPos" : {
-              "h" : 9,
-              "w" : 24,
-              "x" : 0,
-              "y" : 1
-            },
-            "id" : 11,
-            "interval" : "$${TimeForOneDataPoint}",
-            "options" : {
-              "legend" : {
-                "calcs" : [
-                  "sum"
-                ],
-                "displayMode" : "table",
-                "placement" : "right",
-                "showLegend" : true
-              },
-              "tooltip" : {
-                "hideZeros" : false,
-                "mode" : "single",
-                "sort" : "none"
-              }
-            },
-            "pluginVersion" : "11.6.1",
-            "targets" : [
-              {
-                "alias" : "",
-                "bucketAggs" : [
-                  {
-                    "field" : "@timestamp",
-                    "id" : "2",
-                    "settings" : {
-                      "interval" : "auto"
-                    },
-                    "type" : "date_histogram"
-                  }
-                ],
-                "datasource" : "logs",
-                "hide" : false,
-                "metrics" : [
-                  {
-                    "id" : "1",
-                    "type" : "count"
-                  }
-                ],
-                "query" : "kubernetes.container_name: $${ServiceName}",
-                "refId" : "A",
-                "timeField" : "@timestamp"
-              }
-            ],
-            "title" : "Logs count",
-            "type" : "timeseries"
-          },
-          {
-            "datasource" : "logs",
-            "fieldConfig" : {
-              "defaults" : {
-                "color" : {
-                  "mode" : "thresholds"
-                },
-                "custom" : {
-                  "align" : "auto",
-                  "cellOptions" : {
-                    "type" : "auto"
-                  },
-                  "inspect" : true
-                },
-                "mappings" : [],
-                "thresholds" : {
-                  "mode" : "absolute",
-                  "steps" : [
-                    {
-                      "color" : "green"
-                    }
-                  ]
-                }
-              },
-              "overrides" : [
-                {
-                  "matcher" : {
-                    "id" : "byName",
-                    "options" : "_source"
-                  },
-                  "properties" : [
-                    {
-                      "id" : "custom.width",
-                      "value" : 607
-                    }
-                  ]
-                },
-                {
-                  "matcher" : {
-                    "id" : "byName",
-                    "options" : "kubernetes.container_name"
-                  },
-                  "properties" : [
-                    {
-                      "id" : "custom.width",
-                      "value" : 397
-                    }
-                  ]
-                }
-              ]
-            },
-            "gridPos" : {
-              "h" : 8,
-              "w" : 12,
-              "x" : 0,
-              "y" : 10
-            },
-            "id" : 9,
-            "options" : {
-              "cellHeight" : "sm",
-              "footer" : {
-                "countRows" : false,
-                "fields" : "",
-                "reducer" : [
-                  "sum"
-                ],
-                "show" : false
-              },
-              "showHeader" : true,
-              "sortBy" : [
-                {
-                  "desc" : true,
-                  "displayName" : "_source"
-                }
-              ]
-            },
-            "pluginVersion" : "11.6.1",
-            "targets" : [
-              {
-                "alias" : "",
-                "bucketAggs" : [],
-                "datasource" : "logs",
-                "hide" : false,
-                "metrics" : [
-                  {
-                    "id" : "1",
-                    "settings" : {
-                      "limit" : "500"
-                    },
-                    "type" : "logs"
-                  }
-                ],
-                "query" : "kubernetes.container_name: $${ServiceName}",
-                "refId" : "A",
-                "timeField" : "@timestamp"
-              }
-            ],
-            "title" : "Latest logs",
-            "transformations" : [
-              {
-                "id" : "extractFields",
-                "options" : {
-                  "delimiter" : ",",
-                  "format" : "json",
-                  "replace" : true,
-                  "source" : "_source"
-                }
-              },
-              {
-                "id" : "filterByValue",
-                "options" : {
-                  "filters" : [
-                    {
-                      "config" : {
-                        "id" : "equal",
-                        "options" : {
-                          "value" : "stdout"
-                        }
-                      },
-                      "fieldName" : "stream"
-                    }
-                  ],
-                  "match" : "any",
-                  "type" : "include"
-                }
-              },
-              {
-                "id" : "filterFieldsByName",
-                "options" : {
-                  "include" : {
-                    "names" : [
-                      "log"
-                    ]
-                  }
-                }
-              }
-            ],
-            "type" : "table"
-          },
-          {
-            "datasource" : "logs",
-            "fieldConfig" : {
-              "defaults" : {
-                "color" : {
-                  "mode" : "thresholds"
-                },
-                "custom" : {
-                  "align" : "auto",
-                  "cellOptions" : {
-                    "type" : "auto"
-                  },
-                  "inspect" : true
-                },
-                "mappings" : [],
-                "thresholds" : {
-                  "mode" : "absolute",
-                  "steps" : [
-                    {
-                      "color" : "green"
-                    }
-                  ]
-                }
-              },
-              "overrides" : [
-                {
-                  "matcher" : {
-                    "id" : "byName",
-                    "options" : "_source"
-                  },
-                  "properties" : [
-                    {
-                      "id" : "custom.width",
-                      "value" : 607
-                    }
-                  ]
-                },
-                {
-                  "matcher" : {
-                    "id" : "byName",
-                    "options" : "kubernetes.container_name"
-                  },
-                  "properties" : [
-                    {
-                      "id" : "custom.width",
-                      "value" : 397
-                    }
-                  ]
-                }
-              ]
-            },
-            "gridPos" : {
-              "h" : 8,
-              "w" : 12,
-              "x" : 12,
-              "y" : 10
-            },
-            "id" : 10,
-            "options" : {
-              "cellHeight" : "sm",
-              "footer" : {
-                "countRows" : false,
-                "fields" : "",
-                "reducer" : [
-                  "sum"
-                ],
-                "show" : false
-              },
-              "showHeader" : true,
-              "sortBy" : [
-                {
-                  "desc" : true,
-                  "displayName" : "_source"
-                }
-              ]
-            },
-            "pluginVersion" : "11.6.1",
-            "targets" : [
-              {
-                "alias" : "",
-                "bucketAggs" : [],
-                "datasource" : "logs",
-                "hide" : false,
-                "metrics" : [
-                  {
-                    "id" : "1",
-                    "settings" : {
-                      "limit" : "500"
-                    },
-                    "type" : "logs"
-                  }
-                ],
-                "query" : "kubernetes.container_name: $${ServiceName}",
-                "refId" : "A",
-                "timeField" : "@timestamp"
-              }
-            ],
-            "title" : "Latest error logs",
-            "transformations" : [
-              {
-                "id" : "extractFields",
-                "options" : {
-                  "delimiter" : ",",
-                  "format" : "json",
-                  "replace" : true,
-                  "source" : "_source"
-                }
-              },
-              {
-                "id" : "filterByValue",
-                "options" : {
-                  "filters" : [
-                    {
-                      "config" : {
-                        "id" : "equal",
-                        "options" : {
-                          "value" : "stderr"
-                        }
-                      },
-                      "fieldName" : "stream"
-                    }
-                  ],
-                  "match" : "any",
-                  "type" : "include"
-                }
-              },
-              {
-                "id" : "filterFieldsByName",
-                "options" : {
-                  "include" : {
-                    "names" : [
-                      "log"
-                    ]
-                  }
-                }
-              }
-            ],
-            "type" : "table"
-          }
-        ],
+        "panels" : [],
         "title" : "Logs",
         "type" : "row"
+      },
+      {
+        "datasource" : "logs",
+        "fieldConfig" : {
+          "defaults" : {
+            "color" : {
+              "mode" : "palette-classic"
+            },
+            "custom" : {
+              "axisBorderShow" : false,
+              "axisCenteredZero" : false,
+              "axisColorMode" : "text",
+              "axisLabel" : "",
+              "axisPlacement" : "auto",
+              "barAlignment" : 0,
+              "barWidthFactor" : 0.6,
+              "drawStyle" : "line",
+              "fillOpacity" : 0,
+              "gradientMode" : "none",
+              "hideFrom" : {
+                "legend" : false,
+                "tooltip" : false,
+                "viz" : false
+              },
+              "insertNulls" : false,
+              "lineInterpolation" : "linear",
+              "lineWidth" : 1,
+              "pointSize" : 5,
+              "scaleDistribution" : {
+                "type" : "linear"
+              },
+              "showPoints" : "auto",
+              "spanNulls" : false,
+              "stacking" : {
+                "group" : "A",
+                "mode" : "none"
+              },
+              "thresholdsStyle" : {
+                "mode" : "off"
+              }
+            },
+            "mappings" : [],
+            "thresholds" : {
+              "mode" : "absolute",
+              "steps" : [
+                {
+                  "color" : "green"
+                }
+              ]
+            }
+          },
+          "overrides" : [
+            {
+              "matcher" : {
+                "id" : "byName",
+                "options" : "_source"
+              },
+              "properties" : []
+            },
+            {
+              "matcher" : {
+                "id" : "byName",
+                "options" : "kubernetes.container_name"
+              },
+              "properties" : []
+            }
+          ]
+        },
+        "gridPos" : {
+          "h" : 9,
+          "w" : 24,
+          "x" : 0,
+          "y" : 1
+        },
+        "id" : 11,
+        "interval" : "$${TimeForOneDataPoint}",
+        "options" : {
+          "legend" : {
+            "calcs" : [
+              "sum"
+            ],
+            "displayMode" : "table",
+            "placement" : "right",
+            "showLegend" : true
+          },
+          "tooltip" : {
+            "hideZeros" : false,
+            "mode" : "single",
+            "sort" : "none"
+          }
+        },
+        "pluginVersion" : "11.6.1",
+        "targets" : [
+          {
+            "alias" : "",
+            "bucketAggs" : [
+              {
+                "field" : "@timestamp",
+                "id" : "2",
+                "settings" : {
+                  "interval" : "auto"
+                },
+                "type" : "date_histogram"
+              }
+            ],
+            "datasource" : "logs",
+            "hide" : false,
+            "metrics" : [
+              {
+                "id" : "1",
+                "type" : "count"
+              }
+            ],
+            "query" : "kubernetes.container_name: $${ServiceName}",
+            "refId" : "A",
+            "timeField" : "@timestamp"
+          }
+        ],
+        "title" : "Logs count",
+        "type" : "timeseries"
+      },
+      {
+        "datasource" : "logs",
+        "fieldConfig" : {
+          "defaults" : {
+            "color" : {
+              "mode" : "thresholds"
+            },
+            "custom" : {
+              "align" : "auto",
+              "cellOptions" : {
+                "type" : "auto"
+              },
+              "inspect" : true
+            },
+            "mappings" : [],
+            "thresholds" : {
+              "mode" : "absolute",
+              "steps" : [
+                {
+                  "color" : "green"
+                }
+              ]
+            }
+          },
+          "overrides" : [
+            {
+              "matcher" : {
+                "id" : "byName",
+                "options" : "_source"
+              },
+              "properties" : [
+                {
+                  "id" : "custom.width",
+                  "value" : 607
+                }
+              ]
+            },
+            {
+              "matcher" : {
+                "id" : "byName",
+                "options" : "kubernetes.container_name"
+              },
+              "properties" : [
+                {
+                  "id" : "custom.width",
+                  "value" : 397
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos" : {
+          "h" : 8,
+          "w" : 12,
+          "x" : 0,
+          "y" : 10
+        },
+        "id" : 9,
+        "options" : {
+          "cellHeight" : "sm",
+          "footer" : {
+            "countRows" : false,
+            "fields" : "",
+            "reducer" : [
+              "sum"
+            ],
+            "show" : false
+          },
+          "showHeader" : true,
+          "sortBy" : [
+            {
+              "desc" : true,
+              "displayName" : "_source"
+            }
+          ]
+        },
+        "pluginVersion" : "11.6.1",
+        "targets" : [
+          {
+            "alias" : "",
+            "bucketAggs" : [],
+            "datasource" : "logs",
+            "hide" : false,
+            "metrics" : [
+              {
+                "id" : "1",
+                "settings" : {
+                  "limit" : "500"
+                },
+                "type" : "logs"
+              }
+            ],
+            "query" : "kubernetes.container_name: $${ServiceName}",
+            "refId" : "A",
+            "timeField" : "@timestamp"
+          }
+        ],
+        "title" : "Latest logs",
+        "transformations" : [
+          {
+            "id" : "extractFields",
+            "options" : {
+              "delimiter" : ",",
+              "format" : "json",
+              "replace" : true,
+              "source" : "_source"
+            }
+          },
+          {
+            "id" : "filterByValue",
+            "options" : {
+              "filters" : [
+                {
+                  "config" : {
+                    "id" : "equal",
+                    "options" : {
+                      "value" : "stdout"
+                    }
+                  },
+                  "fieldName" : "stream"
+                }
+              ],
+              "match" : "any",
+              "type" : "include"
+            }
+          },
+          {
+            "id" : "filterFieldsByName",
+            "options" : {
+              "include" : {
+                "names" : [
+                  "log"
+                ]
+              }
+            }
+          }
+        ],
+        "type" : "table"
+      },
+      {
+        "datasource" : "logs",
+        "fieldConfig" : {
+          "defaults" : {
+            "color" : {
+              "mode" : "thresholds"
+            },
+            "custom" : {
+              "align" : "auto",
+              "cellOptions" : {
+                "type" : "auto"
+              },
+              "inspect" : true
+            },
+            "mappings" : [],
+            "thresholds" : {
+              "mode" : "absolute",
+              "steps" : [
+                {
+                  "color" : "green"
+                }
+              ]
+            }
+          },
+          "overrides" : [
+            {
+              "matcher" : {
+                "id" : "byName",
+                "options" : "_source"
+              },
+              "properties" : [
+                {
+                  "id" : "custom.width",
+                  "value" : 607
+                }
+              ]
+            },
+            {
+              "matcher" : {
+                "id" : "byName",
+                "options" : "kubernetes.container_name"
+              },
+              "properties" : [
+                {
+                  "id" : "custom.width",
+                  "value" : 397
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos" : {
+          "h" : 8,
+          "w" : 12,
+          "x" : 12,
+          "y" : 10
+        },
+        "id" : 10,
+        "options" : {
+          "cellHeight" : "sm",
+          "footer" : {
+            "countRows" : false,
+            "fields" : "",
+            "reducer" : [
+              "sum"
+            ],
+            "show" : false
+          },
+          "showHeader" : true,
+          "sortBy" : [
+            {
+              "desc" : true,
+              "displayName" : "_source"
+            }
+          ]
+        },
+        "pluginVersion" : "11.6.1",
+        "targets" : [
+          {
+            "alias" : "",
+            "bucketAggs" : [],
+            "datasource" : "logs",
+            "hide" : false,
+            "metrics" : [
+              {
+                "id" : "1",
+                "settings" : {
+                  "limit" : "500"
+                },
+                "type" : "logs"
+              }
+            ],
+            "query" : "kubernetes.container_name: $${ServiceName}",
+            "refId" : "A",
+            "timeField" : "@timestamp"
+          }
+        ],
+        "title" : "Latest error logs",
+        "transformations" : [
+          {
+            "id" : "extractFields",
+            "options" : {
+              "delimiter" : ",",
+              "format" : "json",
+              "replace" : true,
+              "source" : "_source"
+            }
+          },
+          {
+            "id" : "filterByValue",
+            "options" : {
+              "filters" : [
+                {
+                  "config" : {
+                    "id" : "equal",
+                    "options" : {
+                      "value" : "stderr"
+                    }
+                  },
+                  "fieldName" : "stream"
+                }
+              ],
+              "match" : "any",
+              "type" : "include"
+            }
+          },
+          {
+            "id" : "filterFieldsByName",
+            "options" : {
+              "include" : {
+                "names" : [
+                  "log"
+                ]
+              }
+            }
+          }
+        ],
+        "type" : "table"
       },
       {
         "collapsed" : true,
@@ -441,7 +440,7 @@ resource "grafana_dashboard" "elasticsearch" {
           "h" : 1,
           "w" : 24,
           "x" : 0,
-          "y" : 1
+          "y" : 18
         },
         "id" : 2,
         "panels" : [
@@ -470,7 +469,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 6,
               "w" : 8,
               "x" : 0,
-              "y" : 19
+              "y" : 38
             },
             "id" : 5,
             "options" : {
@@ -504,7 +503,7 @@ resource "grafana_dashboard" "elasticsearch" {
                 },
                 "editorMode" : "code",
                 "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"memory\", unit=\"byte\"}",
-                "legendFormat" : "{{pod}} RAM - requests",
+                "legendFormat" : "$${ServiceName} RAM - requests",
                 "range" : true,
                 "refId" : "A"
               },
@@ -516,7 +515,7 @@ resource "grafana_dashboard" "elasticsearch" {
                 "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"memory\", unit=\"byte\"}",
                 "hide" : false,
                 "instant" : false,
-                "legendFormat" : "{{pod}} RAM - limits",
+                "legendFormat" : "$${ServiceName} RAM - limits",
                 "range" : true,
                 "refId" : "B"
               }
@@ -548,7 +547,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 6,
               "w" : 8,
               "x" : 8,
-              "y" : 19
+              "y" : 38
             },
             "id" : 6,
             "options" : {
@@ -582,7 +581,7 @@ resource "grafana_dashboard" "elasticsearch" {
                 },
                 "editorMode" : "code",
                 "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"cpu\", unit=\"core\"}",
-                "legendFormat" : "{{pod}} CPUs",
+                "legendFormat" : "$${ServiceName} CPUs",
                 "range" : true,
                 "refId" : "A"
               },
@@ -594,7 +593,7 @@ resource "grafana_dashboard" "elasticsearch" {
                 "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"cpu\", unit=\"core\"}",
                 "hide" : false,
                 "instant" : false,
-                "legendFormat" : "{{pod}} CPUs",
+                "legendFormat" : "$${ServiceName}  CPUs",
                 "range" : true,
                 "refId" : "B"
               }
@@ -627,7 +626,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 6,
               "w" : 8,
               "x" : 16,
-              "y" : 19
+              "y" : 38
             },
             "id" : 7,
             "options" : {
@@ -661,7 +660,7 @@ resource "grafana_dashboard" "elasticsearch" {
                 },
                 "editorMode" : "code",
                 "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"ephemeral_storage\", unit=\"byte\"}",
-                "legendFormat" : "{{pod}} ephemeral storage - requests",
+                "legendFormat" : "$${ServiceName} ephemeral storage - requests",
                 "range" : true,
                 "refId" : "A"
               },
@@ -673,7 +672,7 @@ resource "grafana_dashboard" "elasticsearch" {
                 "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"ephemeral_storage\", unit=\"byte\"}",
                 "hide" : false,
                 "instant" : false,
-                "legendFormat" : "{{pod}} ephemeral storage - limits",
+                "legendFormat" : "$${ServiceName} ephemeral storage - limits",
                 "range" : true,
                 "refId" : "B"
               }
@@ -744,7 +743,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 6,
               "w" : 24,
               "x" : 0,
-              "y" : 25
+              "y" : 44
             },
             "id" : 4,
             "interval" : "$TimeForOneDataPoint",
@@ -853,7 +852,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 7,
               "w" : 12,
               "x" : 0,
-              "y" : 31
+              "y" : 50
             },
             "id" : 1,
             "interval" : "$TimeForOneDataPoint",
@@ -950,7 +949,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 7,
               "w" : 12,
               "x" : 12,
-              "y" : 31
+              "y" : 50
             },
             "id" : 3,
             "interval" : "$TimeForOneDataPoint",
@@ -1058,12 +1057,12 @@ resource "grafana_dashboard" "elasticsearch" {
         },
         {
           "current" : {
-            "text" : "elasticsearch",
-            "value" : "elasticsearch"
+            "text" : "grafana",
+            "value" : "grafana"
           },
           "hide" : 2,
           "name" : "ServiceName",
-          "query" : "elasticsearch",
+          "query" : "grafana",
           "skipUrlSync" : true,
           "type" : "constant"
         }
@@ -1075,6 +1074,6 @@ resource "grafana_dashboard" "elasticsearch" {
     },
     "timepicker" : {},
     "timezone" : "browser",
-    "title" : "Elasticsearch"
+    "title" : "Grafana"
   })
 }
