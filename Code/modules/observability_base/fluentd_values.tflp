@@ -4,20 +4,68 @@ env:
   - name: FLUENT_ELASTICSEARCH_PORT
     value: "9200"
 
-aggregator:
+forwarder:
   configMapFiles:
     fluentd.conf: |
+        # Prometheus Exporter Plugin
+        # input plugin that exports metrics
         <source>
-          @type tail
-          path /var/log/containers/*.log
-          pos_file /var/log/fluentd-containers.log.pos
-          tag kubernetes.*
-        <parse>
-            @type regexp
-            pattern ^(?<time>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z)\s+(?<level>\w+)\s+(?<message>.*)$
-          </parse>
+          @type prometheus
+          port 24231
         </source>
 
-        <match **>
+        # input plugin that collects metrics from MonitorAgent
+        <source>
+          @type prometheus_monitor
+          <labels>
+            host $${hostname}
+          </labels>
+        </source>
+
+        # input plugin that collects metrics for output plugin
+        <source>
+          @type prometheus_output_monitor
+          <labels>
+            host $${hostname}
+          </labels>
+        </source>
+
+        # Ignore fluentd own events
+        <match fluent.**>
+          @type null
+        </match>
+
+        # TCP input to receive logs from the forwarders
+        <source>
+          @type forward
+          bind 0.0.0.0
+          port 24224
+        </source>
+
+        # HTTP input for the liveness and readiness probes
+        <source>
+          @type http
+          bind 0.0.0.0
+          port 9880
+        </source>
+
+        # Throw the healthcheck to the standard output instead of forwarding it
+        <match fluentd.healthcheck>
           @type stdout
-        </match
+        </match>
+
+        # Send the logs to the standard output
+        <match **>
+          @type elasticsearch
+          include_tag_key true
+          host "elasticsearch.default.svc.cluster.local"
+          port "9200"
+          logstash_format true
+
+          <buffer>
+            @type file
+            path /opt/bitnami/fluentd/logs/buffers/logs.buffer
+            flush_thread_count 2
+            flush_interval 5s
+          </buffer>
+        </match>
