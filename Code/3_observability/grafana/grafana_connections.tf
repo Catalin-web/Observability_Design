@@ -7,5 +7,5 @@ resource "grafana_data_source" "prometheus" {
 resource "grafana_data_source" "elasticsearch" {
   type = "elasticsearch"
   name = "logs"
-  url  = "http://elasticsearch-master-hl.default.svc.cluster.local:9200"
+  url  = "http://elasticsearch.default.svc.cluster.local:9200"
 }
