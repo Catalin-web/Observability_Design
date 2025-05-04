@@ -107,7 +107,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "y" : 1
             },
             "id" : 11,
-            "interval" : "${TimeForOneDataPoint}",
+            "interval" : "$${TimeForOneDataPoint}",
             "options" : {
               "legend" : {
                 "calcs" : [
@@ -145,7 +145,7 @@ resource "grafana_dashboard" "elasticsearch" {
                     "type" : "count"
                   }
                 ],
-                "query" : "kubernetes.container_name: ${ServiceName}",
+                "query" : "kubernetes.container_name: $${ServiceName}",
                 "refId" : "A",
                 "timeField" : "@timestamp"
               }
@@ -245,7 +245,7 @@ resource "grafana_dashboard" "elasticsearch" {
                     "type" : "logs"
                   }
                 ],
-                "query" : "kubernetes.container_name: ${ServiceName}",
+                "query" : "kubernetes.container_name: $${ServiceName}",
                 "refId" : "A",
                 "timeField" : "@timestamp"
               }
@@ -384,7 +384,7 @@ resource "grafana_dashboard" "elasticsearch" {
                     "type" : "logs"
                   }
                 ],
-                "query" : "kubernetes.container_name: ${ServiceName}",
+                "query" : "kubernetes.container_name: $${ServiceName}",
                 "refId" : "A",
                 "timeField" : "@timestamp"
               }
@@ -503,7 +503,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", pod=~\"${ServiceName}.*\", resource=\"memory\", unit=\"byte\"}",
+                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", pod=~\"$${ServiceName}.*\", resource=\"memory\", unit=\"byte\"}",
                 "legendFormat" : "{{pod}} RAM - requests",
                 "range" : true,
                 "refId" : "A"
@@ -513,7 +513,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", pod=~\"${ServiceName}.*\", resource=\"memory\", unit=\"byte\"}",
+                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", pod=~\"$${ServiceName}.*\", resource=\"memory\", unit=\"byte\"}",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "{{pod}} RAM - limits",
@@ -581,7 +581,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", pod=~\"${ServiceName}.*\", resource=\"cpu\", unit=\"core\"}",
+                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", pod=~\"$${ServiceName}.*\", resource=\"cpu\", unit=\"core\"}",
                 "legendFormat" : "{{pod}} CPUs",
                 "range" : true,
                 "refId" : "A"
@@ -591,7 +591,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", pod=~\"${ServiceName}.*\", resource=\"cpu\", unit=\"core\"}",
+                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", pod=~\"$${ServiceName}.*\", resource=\"cpu\", unit=\"core\"}",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "{{pod}} CPUs",
@@ -660,7 +660,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", pod=~\"${ServiceName}.*\", resource=\"ephemeral_storage\", unit=\"byte\"}",
+                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", pod=~\"$${ServiceName}.*\", resource=\"ephemeral_storage\", unit=\"byte\"}",
                 "legendFormat" : "{{pod}} ephemeral storage - requests",
                 "range" : true,
                 "refId" : "A"
@@ -670,7 +670,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", pod=~\"${ServiceName}.*\", resource=\"ephemeral_storage\", unit=\"byte\"}",
+                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", pod=~\"$${ServiceName}.*\", resource=\"ephemeral_storage\", unit=\"byte\"}",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "{{pod}} ephemeral storage - limits",
@@ -770,7 +770,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "sum(rate(container_cpu_usage_seconds_total{pod=~\"${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", pod=~\"${ServiceName}.*\", resource=\"cpu\", unit=\"core\"}) ",
+                "expr" : "sum(rate(container_cpu_usage_seconds_total{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", pod=~\"$${ServiceName}.*\", resource=\"cpu\", unit=\"core\"}) ",
                 "legendFormat" : "CPU",
                 "range" : true,
                 "refId" : "A"
@@ -780,7 +780,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "sum(rate(container_memory_usage_bytes{pod=~\"${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", pod=~\"${ServiceName}.*\", resource=\"memory\", unit=\"byte\"}) ",
+                "expr" : "sum(rate(container_memory_usage_bytes{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", pod=~\"$${ServiceName}.*\", resource=\"memory\", unit=\"byte\"}) ",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "RAM",
@@ -879,7 +879,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "max(kube_pod_status_phase{pod=~\"${ServiceName}.*\", service=\"kube-state-metrics\"}) by (phase)",
+                "expr" : "max(kube_pod_status_phase{pod=~\"$${ServiceName}.*\", service=\"kube-state-metrics\"}) by (phase)",
                 "legendFormat" : "{{phase}} pods",
                 "range" : true,
                 "refId" : "A"
@@ -976,7 +976,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "sum(increase(kube_pod_init_container_status_restarts_total{service=\"kube-state-metrics\",pod=~\"${ServiceName}-.*\"}[$TimeForOneDataPoint]))",
+                "expr" : "sum(increase(kube_pod_init_container_status_restarts_total{service=\"kube-state-metrics\",pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint]))",
                 "legendFormat" : "Container restarts",
                 "range" : true,
                 "refId" : "A"
@@ -986,7 +986,7 @@ resource "grafana_dashboard" "elasticsearch" {
             "type" : "timeseries"
           }
         ],
-        "title" : "Container Insights - ${ServiceName}",
+        "title" : "Container Insights - $${ServiceName}",
         "type" : "row"
       }
     ],
