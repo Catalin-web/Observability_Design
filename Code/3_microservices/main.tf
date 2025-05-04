@@ -4,5 +4,3 @@ module "microservice" {
 
   microservice_name = each.value
 }
-
-

@@ -20,7 +20,7 @@ resource "grafana_dashboard" "elasticsearch" {
     "editable" : true,
     "fiscalYearStartMonth" : 0,
     "graphTooltip" : 0,
-    "id" : 2,
+    "id" : 3,
     "links" : [],
     "panels" : [
       {
@@ -145,7 +145,7 @@ resource "grafana_dashboard" "elasticsearch" {
                     "type" : "count"
                   }
                 ],
-                "query" : "kubernetes.container_name: $${ServiceName}",
+                "query" : "kubernetes.pod_name: \"^$${ServiceName}-.*\"",
                 "refId" : "A",
                 "timeField" : "@timestamp"
               }
@@ -208,7 +208,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 8,
               "w" : 12,
               "x" : 0,
-              "y" : 10
+              "y" : 29
             },
             "id" : 9,
             "options" : {
@@ -245,7 +245,7 @@ resource "grafana_dashboard" "elasticsearch" {
                     "type" : "logs"
                   }
                 ],
-                "query" : "kubernetes.container_name: $${ServiceName}",
+                "query" : "kubernetes.pod_name: \"^$${ServiceName}-.*\"",
                 "refId" : "A",
                 "timeField" : "@timestamp"
               }
@@ -347,7 +347,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 8,
               "w" : 12,
               "x" : 12,
-              "y" : 10
+              "y" : 29
             },
             "id" : 10,
             "options" : {
@@ -384,7 +384,7 @@ resource "grafana_dashboard" "elasticsearch" {
                     "type" : "logs"
                   }
                 ],
-                "query" : "kubernetes.container_name: $${ServiceName}",
+                "query" : "kubernetes.pod_name: \"^$${ServiceName}-.*\"",
                 "refId" : "A",
                 "timeField" : "@timestamp"
               }
@@ -470,7 +470,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 6,
               "w" : 8,
               "x" : 0,
-              "y" : 19
+              "y" : 2
             },
             "id" : 5,
             "options" : {
@@ -503,7 +503,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"memory\", unit=\"byte\"}",
+                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "legendFormat" : "{{pod}} RAM - requests",
                 "range" : true,
                 "refId" : "A"
@@ -513,7 +513,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"memory\", unit=\"byte\"}",
+                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "{{pod}} RAM - limits",
@@ -548,7 +548,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 6,
               "w" : 8,
               "x" : 8,
-              "y" : 19
+              "y" : 2
             },
             "id" : 6,
             "options" : {
@@ -581,7 +581,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"cpu\", unit=\"core\"}",
+                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}",
                 "legendFormat" : "{{pod}} CPUs",
                 "range" : true,
                 "refId" : "A"
@@ -591,7 +591,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"cpu\", unit=\"core\"}",
+                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "{{pod}} CPUs",
@@ -627,7 +627,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 6,
               "w" : 8,
               "x" : 16,
-              "y" : 19
+              "y" : 2
             },
             "id" : 7,
             "options" : {
@@ -660,7 +660,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"ephemeral_storage\", unit=\"byte\"}",
+                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"ephemeral_storage\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "legendFormat" : "{{pod}} ephemeral storage - requests",
                 "range" : true,
                 "refId" : "A"
@@ -670,7 +670,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"ephemeral_storage\", unit=\"byte\"}",
+                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", resource=\"ephemeral_storage\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "{{pod}} ephemeral storage - limits",
@@ -744,7 +744,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 6,
               "w" : 24,
               "x" : 0,
-              "y" : 25
+              "y" : 8
             },
             "id" : 4,
             "interval" : "$TimeForOneDataPoint",
@@ -770,7 +770,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "sum(rate(container_cpu_usage_seconds_total{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"cpu\", unit=\"core\"}) ",
+                "expr" : "sum(rate(container_cpu_usage_seconds_total{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}) ",
                 "legendFormat" : "CPU",
                 "range" : true,
                 "refId" : "A"
@@ -780,7 +780,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "sum(rate(container_memory_usage_bytes{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", container=\"$${ServiceName}\", resource=\"memory\", unit=\"byte\"}) ",
+                "expr" : "sum(rate(container_memory_usage_bytes{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}) ",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "RAM",
@@ -853,7 +853,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 7,
               "w" : 12,
               "x" : 0,
-              "y" : 31
+              "y" : 14
             },
             "id" : 1,
             "interval" : "$TimeForOneDataPoint",
@@ -879,7 +879,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "max(kube_pod_status_phase{pod=~\"$${ServiceName}.*\", service=\"kube-state-metrics\"}) by (phase)",
+                "expr" : "max(kube_pod_status_phase{service=\"kube-state-metrics\", pod=~\"^$${ServiceName}-.*\"}) by (phase)",
                 "legendFormat" : "{{phase}} pods",
                 "range" : true,
                 "refId" : "A"
@@ -950,7 +950,7 @@ resource "grafana_dashboard" "elasticsearch" {
               "h" : 7,
               "w" : 12,
               "x" : 12,
-              "y" : 31
+              "y" : 14
             },
             "id" : 3,
             "interval" : "$TimeForOneDataPoint",
@@ -976,7 +976,7 @@ resource "grafana_dashboard" "elasticsearch" {
                   "type" : "prometheus"
                 },
                 "editorMode" : "code",
-                "expr" : "sum(increase(kube_pod_init_container_status_restarts_total{service=\"kube-state-metrics\",pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint]))",
+                "expr" : "sum(increase(kube_pod_init_container_status_restarts_total{service=\"kube-state-metrics\", pod=~\"^$${ServiceName}-.*\"}[$TimeForOneDataPoint]))",
                 "legendFormat" : "Container restarts",
                 "range" : true,
                 "refId" : "A"
@@ -1058,12 +1058,12 @@ resource "grafana_dashboard" "elasticsearch" {
         },
         {
           "current" : {
-            "text" : "microservice1-nginx",
-            "value" : "microservice1-nginx"
+            "text" : "elasticsearch",
+            "value" : "elasticsearch"
           },
           "hide" : 2,
           "name" : "ServiceName",
-          "query" : "microservice1-nginx",
+          "query" : "elasticsearch",
           "skipUrlSync" : true,
           "type" : "constant"
         }
@@ -1075,6 +1075,6 @@ resource "grafana_dashboard" "elasticsearch" {
     },
     "timepicker" : {},
     "timezone" : "browser",
-    "title" : "Microservice1"
+    "title" : "Elasticsearch",
   })
 }
