@@ -6,22 +6,25 @@ annotations:
     prometheus.io/port: "9113"
     prometheus.io/scheme: http
 
+containerPorts:
+  http: 8081
+
 serverBlock: |-
   server {
-    listen 0.0.0.0:8080;
-    location /grafana/ {
+    listen 8081;
+    location ~ /grafana/ {
       rewrite  ^/grafana/(.*)  /$1 break;
       proxy_set_header Host $host;
-      proxy_pass http://grafana.default.svc.cluster.local;
+      proxy_pass http://grafana.default.svc.cluster.local:3000;
     }
 
     # Proxy Grafana Live WebSocket connections.
-    location /grafana/api/live/ {
+    location ~ /grafana/api/live/ {
       rewrite  ^/grafana/(.*)  /$1 break;
       proxy_http_version 1.1;
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection upgrade;
       proxy_set_header Host $host;
-      proxy_pass http://grafana.default.svc.cluster.local;
+      proxy_pass http://grafana.default.svc.cluster.local:3000;
     }
   }

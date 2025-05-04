@@ -1,4 +1,3 @@
-grafana.ini:
 config:
   useGrafanaIniFile: true
   grafanaIniConfigMap: ${config_map}
