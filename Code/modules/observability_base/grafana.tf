@@ -12,13 +12,23 @@ resource "kubernetes_secret" "grafana_admin_credentials" {
   }
 }
 
+resource "kubernetes_config_map" "grafana" {
+  metadata {
+    name = "grafana-config-map"
+  }
+
+  data = {
+    "grafana.ini" = "${file("${path.module}/grafana.ini")}"
+  }
+}
+
 resource "helm_release" "grafana" {
   name  = "grafana"
-  chart = "grafana/grafana"
+  chart = "bitnami/grafana"
   values = [templatefile("${path.module}/grafana_values.tflp", {
-    secret_name  = kubernetes_secret.grafana_admin_credentials.metadata[0].name
-    username_key = "username"
-    password_key = "password"
+    username = kubernetes_secret.grafana_admin_credentials.data.username
+    password = kubernetes_secret.grafana_admin_credentials.data.password
+    config_map = "grafana-config-map"
   })]
 }
 

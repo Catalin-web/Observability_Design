@@ -4,7 +4,7 @@ env:
   - name: FLUENT_ELASTICSEARCH_PORT
     value: "9200"
 
-forwarder:
+aggregator:
   configMapFiles:
     fluentd.conf: |
         # Prometheus Exporter Plugin
