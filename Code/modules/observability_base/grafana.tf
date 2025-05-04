@@ -1,7 +1,3 @@
-locals {
-  grafana_config_map_name = "grafana-config-map"
-}
-
 resource "random_password" "grafana_password" {
   length = 32
 }
@@ -16,25 +12,12 @@ resource "kubernetes_secret" "grafana_admin_credentials" {
   }
 }
 
-resource "kubernetes_config_map" "grafana" {
-  metadata {
-    name = local.grafana_config_map_name
-  }
-
-  data = {
-    "grafana.ini" = "${file("${path.module}/grafana.ini")}"
-  }
-}
-
 resource "helm_release" "grafana" {
   name  = "grafana"
-  chart = "bitnami/grafana"
+  chart = "grafana/grafana"
   values = [templatefile("${path.module}/grafana_values.tflp", {
-    username   = kubernetes_secret.grafana_admin_credentials.data.username
-    password   = kubernetes_secret.grafana_admin_credentials.data.password
-    config_map = local.grafana_config_map_name
+    secret_name  = kubernetes_secret.grafana_admin_credentials.metadata[0].name
+    username_key = "username"
+    password_key = "password"
   })]
-
-  depends_on = [kubernetes_config_map.grafana]
 }
-

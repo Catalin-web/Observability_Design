@@ -1,6 +1,7 @@
-config:
-  useGrafanaIniFile: true
-  grafanaIniConfigMap: ${config_map}
+grafana.ini:
+  server:
+    root_url: http://localhost:3000/grafana
 admin:
-  user: ${username}
-  password: ${password}
+  existingSecret: ${secret_name}
+  userKey: ${username_key}
+  passwordKey: ${password_key}

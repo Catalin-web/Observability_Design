@@ -15,7 +15,7 @@ serverBlock: |-
     location ~ /grafana/ {
       rewrite  ^/grafana/(.*)  /$1 break;
       proxy_set_header Host $host;
-      proxy_pass http://grafana.default.svc.cluster.local:3000;
+      proxy_pass http://grafana.default.svc.cluster.local;
     }
 
     # Proxy Grafana Live WebSocket connections.
@@ -25,6 +25,6 @@ serverBlock: |-
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection upgrade;
       proxy_set_header Host $host;
-      proxy_pass http://grafana.default.svc.cluster.local:3000;
+      proxy_pass http://grafana.default.svc.cluster.local;
     }
   }
