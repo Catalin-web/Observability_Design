@@ -1,16 +1,26 @@
-mode: daemonset
+mode: deployment
 
 image:
   repository: "otel/opentelemetry-collector-contrib"
   tag: 0.123.0
 
 presets:
-  logsCollection:
-    enabled: true
-    includeCollectorLogs: true
-
   hostMetrics:
     enabled: true
+
+ports:
+  prometheus:
+    enabled: true
+    containerPort: 8889
+    servicePort: 8889
+    hostPort: 8889
+    protocol: TCP
+    appProtocol: TCP
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "8889"
+  prometheus.io/scheme: http
 
 command:
   name: "otelcol-contrib"
@@ -77,8 +87,8 @@ config:
         network: null
 
   exporters:
-    elasticsearch:
-      endpoint: http://elasticsearch.default.svc.cluster.local:9200
+    prometheus:
+      endpoint: 0.0.0.0:8889
 
   processors:
     memory_limiter:
@@ -86,7 +96,7 @@ config:
   
   service:
     pipelines:
-      logs:
+      metrics:
         exporters:
-        - elasticsearch
+        - prometheus
 
