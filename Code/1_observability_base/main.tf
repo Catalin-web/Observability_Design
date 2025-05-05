@@ -9,3 +9,9 @@ module "metrics" {
 module "dashboard" {
   source = "../modules/observability/dashboard"
 }
+
+module "opentelemetry" {
+  source = "../modules/observability/opentelemetry"
+
+  depends_on = [module.logs, module.metrics, module.dashboard]
+}

@@ -1,0 +1,6 @@
+elasticsearch:
+  hosts:
+    - elasticsearch.default.svc.cluster.local
+  port: "9200"
+
+replicaCount: 1
