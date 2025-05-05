@@ -1,3 +1,3 @@
-module "nginx" {
-  source = "../modules/nginx"
+module "api" {
+  source = "../modules/api"
 }
