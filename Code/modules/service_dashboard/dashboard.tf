@@ -1,5 +1,5 @@
-resource "grafana_dashboard" "grafana" {
-  folder = grafana_folder.terraform_dashboards.uid
+resource "grafana_dashboard" "dashboard" {
+  folder = var.grafana_folder_uid
   config_json = jsonencode({
     "annotations" : {
       "list" : [
@@ -446,9 +446,7 @@ resource "grafana_dashboard" "grafana" {
         "id" : 2,
         "panels" : [
           {
-            "datasource" : {
-              "type" : "prometheus"
-            },
+            "datasource" : "metrics",
             "fieldConfig" : {
               "defaults" : {
                 "color" : {
@@ -499,9 +497,7 @@ resource "grafana_dashboard" "grafana" {
             "pluginVersion" : "11.6.1",
             "targets" : [
               {
-                "datasource" : {
-                  "type" : "prometheus"
-                },
+                "datasource" : "metrics",
                 "editorMode" : "code",
                 "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "legendFormat" : "{{pod}} RAM - requests",
@@ -509,9 +505,7 @@ resource "grafana_dashboard" "grafana" {
                 "refId" : "A"
               },
               {
-                "datasource" : {
-                  "type" : "prometheus"
-                },
+                "datasource" : "metrics",
                 "editorMode" : "code",
                 "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "hide" : false,
@@ -525,9 +519,7 @@ resource "grafana_dashboard" "grafana" {
             "type" : "piechart"
           },
           {
-            "datasource" : {
-              "type" : "prometheus"
-            },
+            "datasource" : "metrics",
             "fieldConfig" : {
               "defaults" : {
                 "color" : {
@@ -577,9 +569,7 @@ resource "grafana_dashboard" "grafana" {
             "pluginVersion" : "11.6.1",
             "targets" : [
               {
-                "datasource" : {
-                  "type" : "prometheus"
-                },
+                "datasource" : "metrics",
                 "editorMode" : "code",
                 "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}",
                 "legendFormat" : "{{pod}} CPUs",
@@ -587,9 +577,7 @@ resource "grafana_dashboard" "grafana" {
                 "refId" : "A"
               },
               {
-                "datasource" : {
-                  "type" : "prometheus"
-                },
+                "datasource" : "metrics",
                 "editorMode" : "code",
                 "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}",
                 "hide" : false,
@@ -603,9 +591,7 @@ resource "grafana_dashboard" "grafana" {
             "type" : "piechart"
           },
           {
-            "datasource" : {
-              "type" : "prometheus"
-            },
+            "datasource" : "metrics",
             "fieldConfig" : {
               "defaults" : {
                 "color" : {
@@ -656,9 +642,7 @@ resource "grafana_dashboard" "grafana" {
             "pluginVersion" : "11.6.1",
             "targets" : [
               {
-                "datasource" : {
-                  "type" : "prometheus"
-                },
+                "datasource" : "metrics",
                 "editorMode" : "code",
                 "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"ephemeral_storage\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "legendFormat" : "{{pod}} ephemeral storage - requests",
@@ -666,9 +650,7 @@ resource "grafana_dashboard" "grafana" {
                 "refId" : "A"
               },
               {
-                "datasource" : {
-                  "type" : "prometheus"
-                },
+                "datasource" : "metrics",
                 "editorMode" : "code",
                 "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", resource=\"ephemeral_storage\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "hide" : false,
@@ -682,9 +664,7 @@ resource "grafana_dashboard" "grafana" {
             "type" : "piechart"
           },
           {
-            "datasource" : {
-              "type" : "prometheus"
-            },
+            "datasource" : "metrics",
             "fieldConfig" : {
               "defaults" : {
                 "color" : {
@@ -766,9 +746,7 @@ resource "grafana_dashboard" "grafana" {
             "pluginVersion" : "11.6.1",
             "targets" : [
               {
-                "datasource" : {
-                  "type" : "prometheus"
-                },
+                "datasource" : "metrics",
                 "editorMode" : "code",
                 "expr" : "sum(rate(container_cpu_usage_seconds_total{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}) ",
                 "legendFormat" : "CPU",
@@ -776,9 +754,7 @@ resource "grafana_dashboard" "grafana" {
                 "refId" : "A"
               },
               {
-                "datasource" : {
-                  "type" : "prometheus"
-                },
+                "datasource" : "metrics",
                 "editorMode" : "code",
                 "expr" : "sum(rate(container_memory_usage_bytes{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}) ",
                 "hide" : false,
@@ -792,9 +768,7 @@ resource "grafana_dashboard" "grafana" {
             "type" : "timeseries"
           },
           {
-            "datasource" : {
-              "type" : "prometheus"
-            },
+            "datasource" : "metrics",
             "fieldConfig" : {
               "defaults" : {
                 "color" : {
@@ -875,9 +849,7 @@ resource "grafana_dashboard" "grafana" {
             "pluginVersion" : "11.6.1",
             "targets" : [
               {
-                "datasource" : {
-                  "type" : "prometheus"
-                },
+                "datasource" : "metrics",
                 "editorMode" : "code",
                 "expr" : "max(kube_pod_status_phase{service=\"kube-state-metrics\", pod=~\"^$${ServiceName}-.*\"}) by (phase)",
                 "legendFormat" : "{{phase}} pods",
@@ -889,9 +861,7 @@ resource "grafana_dashboard" "grafana" {
             "type" : "timeseries"
           },
           {
-            "datasource" : {
-              "type" : "prometheus"
-            },
+            "datasource" : "metrics",
             "fieldConfig" : {
               "defaults" : {
                 "color" : {
@@ -972,9 +942,7 @@ resource "grafana_dashboard" "grafana" {
             "pluginVersion" : "11.6.1",
             "targets" : [
               {
-                "datasource" : {
-                  "type" : "prometheus"
-                },
+                "datasource" : "metrics",
                 "editorMode" : "code",
                 "expr" : "sum(increase(kube_pod_init_container_status_restarts_total{service=\"kube-state-metrics\", pod=~\"^$${ServiceName}-.*\"}[$TimeForOneDataPoint]))",
                 "legendFormat" : "Container restarts",
@@ -1058,12 +1026,12 @@ resource "grafana_dashboard" "grafana" {
         },
         {
           "current" : {
-            "text" : "grafana",
-            "value" : "grafana"
+            "text" : "${var.service_name}",
+            "value" : "${var.service_name}"
           },
           "hide" : 2,
           "name" : "ServiceName",
-          "query" : "grafana",
+          "query" : "${var.service_name}",
           "skipUrlSync" : true,
           "type" : "constant"
         }
@@ -1075,6 +1043,6 @@ resource "grafana_dashboard" "grafana" {
     },
     "timepicker" : {},
     "timezone" : "browser",
-    "title" : "Grafana",
+    "title" : "${var.dashboard_title}",
   })
 }
