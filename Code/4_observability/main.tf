@@ -26,14 +26,6 @@ module "elasticsearch_dashboard" {
   dashboard_title    = "Elasticsearch"
 }
 
-module "fluentd_dashboard" {
-  source = "../modules/service_dashboard"
-
-  grafana_folder_uid = module.grafana.grafana_folder_uid
-  service_name       = "fluentd"
-  dashboard_title    = "Fluentd"
-}
-
 module "prometheus_dashboard" {
   source = "../modules/service_dashboard"
 
@@ -54,7 +46,7 @@ module "microservice1_dashboard" {
   source = "../modules/service_dashboard"
 
   grafana_folder_uid = module.grafana.grafana_folder_uid
-  service_name       = "microservice1"
+  service_name       = "microservice1-nginx"
   dashboard_title    = "Microservice1"
 }
 
@@ -62,7 +54,7 @@ module "microservice2_dashboard" {
   source = "../modules/service_dashboard"
 
   grafana_folder_uid = module.grafana.grafana_folder_uid
-  service_name       = "microservice2"
+  service_name       = "microservice2-nginx"
   dashboard_title    = "Microservice2"
 }
 
@@ -70,6 +62,6 @@ module "microservice3_dashboard" {
   source = "../modules/service_dashboard"
 
   grafana_folder_uid = module.grafana.grafana_folder_uid
-  service_name       = "microservice3"
+  service_name       = "microservice3-nginx"
   dashboard_title    = "Microservice3"
 }

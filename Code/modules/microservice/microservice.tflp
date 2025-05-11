@@ -13,3 +13,9 @@ serverBlock: |-
       return 200 "Welcome to ${microservice_name}";
     }
   }
+
+service:
+  type: LoadBalancer
+  ports:
+    http: 81
+    https: 444

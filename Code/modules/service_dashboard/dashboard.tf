@@ -102,7 +102,7 @@ resource "grafana_dashboard" "dashboard" {
             },
             "gridPos" : {
               "h" : 9,
-              "w" : 24,
+              "w" : 12,
               "x" : 0,
               "y" : 1
             },
@@ -145,12 +145,132 @@ resource "grafana_dashboard" "dashboard" {
                     "type" : "count"
                   }
                 ],
-                "query" : "kubernetes.pod_name: \"^$${ServiceName}-.*\"",
+                "query" : "resource.attributes.k8s.deployment.name: \"$${ServiceName}\" && attributes.log.iostream: \"stdout\"",
                 "refId" : "A",
                 "timeField" : "@timestamp"
               }
             ],
             "title" : "Logs count",
+            "type" : "timeseries"
+          },
+          {
+            "datasource" : "logs",
+            "fieldConfig" : {
+              "defaults" : {
+                "color" : {
+                  "mode" : "palette-classic"
+                },
+                "custom" : {
+                  "axisBorderShow" : false,
+                  "axisCenteredZero" : false,
+                  "axisColorMode" : "text",
+                  "axisLabel" : "",
+                  "axisPlacement" : "auto",
+                  "barAlignment" : 0,
+                  "barWidthFactor" : 0.6,
+                  "drawStyle" : "line",
+                  "fillOpacity" : 0,
+                  "gradientMode" : "none",
+                  "hideFrom" : {
+                    "legend" : false,
+                    "tooltip" : false,
+                    "viz" : false
+                  },
+                  "insertNulls" : false,
+                  "lineInterpolation" : "linear",
+                  "lineWidth" : 1,
+                  "pointSize" : 5,
+                  "scaleDistribution" : {
+                    "type" : "linear"
+                  },
+                  "showPoints" : "auto",
+                  "spanNulls" : false,
+                  "stacking" : {
+                    "group" : "A",
+                    "mode" : "none"
+                  },
+                  "thresholdsStyle" : {
+                    "mode" : "off"
+                  }
+                },
+                "mappings" : [],
+                "thresholds" : {
+                  "mode" : "absolute",
+                  "steps" : [
+                    {
+                      "color" : "green"
+                    }
+                  ]
+                }
+              },
+              "overrides" : [
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "_source"
+                  },
+                  "properties" : []
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "kubernetes.container_name"
+                  },
+                  "properties" : []
+                }
+              ]
+            },
+            "gridPos" : {
+              "h" : 9,
+              "w" : 12,
+              "x" : 12,
+              "y" : 1
+            },
+            "id" : 13,
+            "interval" : "$${TimeForOneDataPoint}",
+            "options" : {
+              "legend" : {
+                "calcs" : [
+                  "sum"
+                ],
+                "displayMode" : "table",
+                "placement" : "right",
+                "showLegend" : true
+              },
+              "tooltip" : {
+                "hideZeros" : false,
+                "mode" : "single",
+                "sort" : "none"
+              }
+            },
+            "pluginVersion" : "11.6.1",
+            "targets" : [
+              {
+                "alias" : "",
+                "bucketAggs" : [
+                  {
+                    "field" : "@timestamp",
+                    "id" : "2",
+                    "settings" : {
+                      "interval" : "auto"
+                    },
+                    "type" : "date_histogram"
+                  }
+                ],
+                "datasource" : "logs",
+                "hide" : false,
+                "metrics" : [
+                  {
+                    "id" : "1",
+                    "type" : "count"
+                  }
+                ],
+                "query" : "resource.attributes.k8s.deployment.name: \"$${ServiceName}\" && attributes.log.iostream: \"stderr\"",
+                "refId" : "A",
+                "timeField" : "@timestamp"
+              }
+            ],
+            "title" : "Error ogs count",
             "type" : "timeseries"
           },
           {
@@ -201,6 +321,102 @@ resource "grafana_dashboard" "dashboard" {
                       "value" : 397
                     }
                   ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.container.name"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 304
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "observed_timestamp"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 295
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.pod.name"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 408
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.component"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 352
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.app.kubernetes.io/component"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 310
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.pod.uid"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 287
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.deployment.name"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 507
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "Time"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 200
+                    }
+                  ]
                 }
               ]
             },
@@ -208,9 +424,9 @@ resource "grafana_dashboard" "dashboard" {
               "h" : 8,
               "w" : 12,
               "x" : 0,
-              "y" : 29
+              "y" : 10
             },
-            "id" : 9,
+            "id" : 12,
             "options" : {
               "cellHeight" : "sm",
               "footer" : {
@@ -222,12 +438,7 @@ resource "grafana_dashboard" "dashboard" {
                 "show" : false
               },
               "showHeader" : true,
-              "sortBy" : [
-                {
-                  "desc" : true,
-                  "displayName" : "_source"
-                }
-              ]
+              "sortBy" : []
             },
             "pluginVersion" : "11.6.1",
             "targets" : [
@@ -245,47 +456,290 @@ resource "grafana_dashboard" "dashboard" {
                     "type" : "logs"
                   }
                 ],
-                "query" : "kubernetes.pod_name: \"^$${ServiceName}-.*\"",
+                "query" : "resource.attributes.k8s.deployment.name: \"$${ServiceName}\" && attributes.log.iostream: \"stderr\"",
                 "refId" : "A",
                 "timeField" : "@timestamp"
               }
             ],
-            "title" : "Latest logs",
+            "title" : "Latest error logs",
             "transformations" : [
-              {
-                "id" : "extractFields",
-                "options" : {
-                  "delimiter" : ",",
-                  "format" : "json",
-                  "replace" : true,
-                  "source" : "_source"
-                }
-              },
-              {
-                "id" : "filterByValue",
-                "options" : {
-                  "filters" : [
-                    {
-                      "config" : {
-                        "id" : "equal",
-                        "options" : {
-                          "value" : "stdout"
-                        }
-                      },
-                      "fieldName" : "stream"
-                    }
-                  ],
-                  "match" : "any",
-                  "type" : "include"
-                }
-              },
               {
                 "id" : "filterFieldsByName",
                 "options" : {
                   "include" : {
                     "names" : [
-                      "log"
+                      "@timestamp",
+                      "body.text"
                     ]
+                  }
+                }
+              },
+              {
+                "id" : "renameByRegex",
+                "options" : {
+                  "regex" : "@timestamp",
+                  "renamePattern" : "Time"
+                }
+              },
+              {
+                "id" : "renameByRegex",
+                "options" : {
+                  "regex" : "body.text",
+                  "renamePattern" : "Message"
+                }
+              }
+            ],
+            "type" : "table"
+          },
+          {
+            "datasource" : "logs",
+            "fieldConfig" : {
+              "defaults" : {
+                "color" : {
+                  "mode" : "thresholds"
+                },
+                "custom" : {
+                  "align" : "auto",
+                  "cellOptions" : {
+                    "type" : "auto"
+                  },
+                  "inspect" : true
+                },
+                "mappings" : [],
+                "thresholds" : {
+                  "mode" : "absolute",
+                  "steps" : [
+                    {
+                      "color" : "green"
+                    }
+                  ]
+                }
+              },
+              "overrides" : [
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "_source"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 607
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "kubernetes.container_name"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 397
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.container.name"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 304
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "observed_timestamp"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 295
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.pod.name"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 408
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.component"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 352
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.app.kubernetes.io/component"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 310
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.pod.uid"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 287
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.deployment.name"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 507
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "Time"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 200
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "Message"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 1028
+                    }
+                  ]
+                }
+              ]
+            },
+            "gridPos" : {
+              "h" : 8,
+              "w" : 12,
+              "x" : 12,
+              "y" : 10
+            },
+            "id" : 14,
+            "options" : {
+              "cellHeight" : "sm",
+              "footer" : {
+                "countRows" : false,
+                "fields" : "",
+                "reducer" : [
+                  "sum"
+                ],
+                "show" : false
+              },
+              "showHeader" : true,
+              "sortBy" : []
+            },
+            "pluginVersion" : "11.6.1",
+            "targets" : [
+              {
+                "alias" : "",
+                "bucketAggs" : [],
+                "datasource" : "logs",
+                "hide" : false,
+                "metrics" : [
+                  {
+                    "id" : "1",
+                    "settings" : {
+                      "limit" : "500"
+                    },
+                    "type" : "logs"
+                  }
+                ],
+                "query" : "resource.attributes.k8s.deployment.name: \"$${ServiceName}\" && attributes.log.iostream: \"stderr\"",
+                "refId" : "A",
+                "timeField" : "@timestamp"
+              }
+            ],
+            "title" : "Unique error logs",
+            "transformations" : [
+              {
+                "id" : "filterFieldsByName",
+                "options" : {
+                  "include" : {
+                    "names" : [
+                      "@timestamp",
+                      "body.text"
+                    ]
+                  }
+                }
+              },
+              {
+                "id" : "renameByRegex",
+                "options" : {
+                  "regex" : "@timestamp",
+                  "renamePattern" : "Time"
+                }
+              },
+              {
+                "id" : "renameByRegex",
+                "options" : {
+                  "regex" : "body.text",
+                  "renamePattern" : "Message"
+                }
+              },
+              {
+                "id" : "groupBy",
+                "options" : {
+                  "fields" : {
+                    "@timestamp" : {
+                      "aggregations" : [
+                        "count"
+                      ]
+                    },
+                    "Message" : {
+                      "aggregations" : [],
+                      "operation" : "groupby"
+                    },
+                    "Time" : {
+                      "aggregations" : [
+                        "count"
+                      ],
+                      "operation" : "aggregate"
+                    },
+                    "body.text" : {
+                      "aggregations" : []
+                    }
                   }
                 }
               }
@@ -340,16 +794,112 @@ resource "grafana_dashboard" "dashboard" {
                       "value" : 397
                     }
                   ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.container.name"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 304
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "observed_timestamp"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 295
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.pod.name"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 408
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.component"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 352
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.app.kubernetes.io/component"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 310
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.pod.uid"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 287
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "resource.attributes.k8s.deployment.name"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 507
+                    }
+                  ]
+                },
+                {
+                  "matcher" : {
+                    "id" : "byName",
+                    "options" : "Time"
+                  },
+                  "properties" : [
+                    {
+                      "id" : "custom.width",
+                      "value" : 200
+                    }
+                  ]
                 }
               ]
             },
             "gridPos" : {
               "h" : 8,
-              "w" : 12,
-              "x" : 12,
-              "y" : 29
+              "w" : 24,
+              "x" : 0,
+              "y" : 18
             },
-            "id" : 10,
+            "id" : 9,
             "options" : {
               "cellHeight" : "sm",
               "footer" : {
@@ -361,12 +911,7 @@ resource "grafana_dashboard" "dashboard" {
                 "show" : false
               },
               "showHeader" : true,
-              "sortBy" : [
-                {
-                  "desc" : true,
-                  "displayName" : "_source"
-                }
-              ]
+              "sortBy" : []
             },
             "pluginVersion" : "11.6.1",
             "targets" : [
@@ -384,48 +929,36 @@ resource "grafana_dashboard" "dashboard" {
                     "type" : "logs"
                   }
                 ],
-                "query" : "kubernetes.pod_name: \"^$${ServiceName}-.*\"",
+                "query" : "resource.attributes.k8s.deployment.name: \"$${ServiceName}\" && attributes.log.iostream: \"stdout\"",
                 "refId" : "A",
                 "timeField" : "@timestamp"
               }
             ],
-            "title" : "Latest error logs",
+            "title" : "Latest logs",
             "transformations" : [
-              {
-                "id" : "extractFields",
-                "options" : {
-                  "delimiter" : ",",
-                  "format" : "json",
-                  "replace" : true,
-                  "source" : "_source"
-                }
-              },
-              {
-                "id" : "filterByValue",
-                "options" : {
-                  "filters" : [
-                    {
-                      "config" : {
-                        "id" : "equal",
-                        "options" : {
-                          "value" : "stderr"
-                        }
-                      },
-                      "fieldName" : "stream"
-                    }
-                  ],
-                  "match" : "any",
-                  "type" : "include"
-                }
-              },
               {
                 "id" : "filterFieldsByName",
                 "options" : {
                   "include" : {
                     "names" : [
-                      "log"
+                      "@timestamp",
+                      "body.text"
                     ]
                   }
+                }
+              },
+              {
+                "id" : "renameByRegex",
+                "options" : {
+                  "regex" : "@timestamp",
+                  "renamePattern" : "Time"
+                }
+              },
+              {
+                "id" : "renameByRegex",
+                "options" : {
+                  "regex" : "body.text",
+                  "renamePattern" : "Message"
                 }
               }
             ],
@@ -499,7 +1032,7 @@ resource "grafana_dashboard" "dashboard" {
               {
                 "datasource" : "metrics",
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
+                "expr" : "kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "legendFormat" : "{{pod}} RAM - requests",
                 "range" : true,
                 "refId" : "A"
@@ -507,7 +1040,7 @@ resource "grafana_dashboard" "dashboard" {
               {
                 "datasource" : "metrics",
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
+                "expr" : "kube_pod_container_resource_limits{resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "{{pod}} RAM - limits",
@@ -571,7 +1104,7 @@ resource "grafana_dashboard" "dashboard" {
               {
                 "datasource" : "metrics",
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}",
+                "expr" : "kube_pod_container_resource_requests{resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}",
                 "legendFormat" : "{{pod}} CPUs",
                 "range" : true,
                 "refId" : "A"
@@ -579,7 +1112,7 @@ resource "grafana_dashboard" "dashboard" {
               {
                 "datasource" : "metrics",
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}",
+                "expr" : "kube_pod_container_resource_limits{resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "{{pod}} CPUs",
@@ -644,7 +1177,7 @@ resource "grafana_dashboard" "dashboard" {
               {
                 "datasource" : "metrics",
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"ephemeral_storage\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
+                "expr" : "kube_pod_container_resource_requests{resource=\"ephemeral_storage\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "legendFormat" : "{{pod}} ephemeral storage - requests",
                 "range" : true,
                 "refId" : "A"
@@ -652,7 +1185,7 @@ resource "grafana_dashboard" "dashboard" {
               {
                 "datasource" : "metrics",
                 "editorMode" : "code",
-                "expr" : "kube_pod_container_resource_limits{service=\"kube-state-metrics\", resource=\"ephemeral_storage\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
+                "expr" : "kube_pod_container_resource_limits{resource=\"ephemeral_storage\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "{{pod}} ephemeral storage - limits",
@@ -748,7 +1281,7 @@ resource "grafana_dashboard" "dashboard" {
               {
                 "datasource" : "metrics",
                 "editorMode" : "code",
-                "expr" : "sum(rate(container_cpu_usage_seconds_total{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}) ",
+                "expr" : "sum(rate(container_cpu_usage_seconds_total{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{resource=\"cpu\", unit=\"core\", pod=~\"^$${ServiceName}-.*\"}) ",
                 "legendFormat" : "CPU",
                 "range" : true,
                 "refId" : "A"
@@ -756,7 +1289,7 @@ resource "grafana_dashboard" "dashboard" {
               {
                 "datasource" : "metrics",
                 "editorMode" : "code",
-                "expr" : "sum(rate(container_memory_usage_bytes{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{service=\"kube-state-metrics\", resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}) ",
+                "expr" : "sum(rate(container_memory_usage_bytes{pod=~\"$${ServiceName}-.*\"}[$TimeForOneDataPoint])) / max(kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\", pod=~\"^$${ServiceName}-.*\"}) ",
                 "hide" : false,
                 "instant" : false,
                 "legendFormat" : "RAM",
@@ -851,7 +1384,7 @@ resource "grafana_dashboard" "dashboard" {
               {
                 "datasource" : "metrics",
                 "editorMode" : "code",
-                "expr" : "max(kube_pod_status_phase{service=\"kube-state-metrics\", pod=~\"^$${ServiceName}-.*\"}) by (phase)",
+                "expr" : "max(kube_pod_status_phase{pod=~\"^$${ServiceName}-.*\"}) by (phase)",
                 "legendFormat" : "{{phase}} pods",
                 "range" : true,
                 "refId" : "A"
@@ -944,7 +1477,7 @@ resource "grafana_dashboard" "dashboard" {
               {
                 "datasource" : "metrics",
                 "editorMode" : "code",
-                "expr" : "sum(increase(kube_pod_init_container_status_restarts_total{service=\"kube-state-metrics\", pod=~\"^$${ServiceName}-.*\"}[$TimeForOneDataPoint]))",
+                "expr" : "sum(increase(kube_pod_init_container_status_restarts_total{pod=~\"^$${ServiceName}-.*\"}[$TimeForOneDataPoint]))",
                 "legendFormat" : "Container restarts",
                 "range" : true,
                 "refId" : "A"
@@ -1043,6 +1576,6 @@ resource "grafana_dashboard" "dashboard" {
     },
     "timepicker" : {},
     "timezone" : "browser",
-    "title" : "${var.dashboard_title}",
+    "title" : "${var.dashboard_title}"
   })
 }

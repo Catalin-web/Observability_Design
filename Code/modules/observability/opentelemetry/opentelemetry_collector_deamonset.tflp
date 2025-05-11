@@ -9,6 +9,12 @@ presets:
     enabled: true
     includeCollectorLogs: true
 
+  kubernetesAttributes:
+    enabled: true
+    extractAllPodLabels: true
+    extractAllPodAnnotations: true
+
+
 command:
   name: "otelcol-contrib"
 
@@ -21,6 +27,8 @@ config:
   exporters:
     elasticsearch:
       endpoint: http://elasticsearch.default.svc.cluster.local:9200
+    prometheus:
+      endpoint: 0.0.0.0:8889
 
   processors:
     memory_limiter:
@@ -31,3 +39,6 @@ config:
       logs:
         exporters:
         - elasticsearch
+      metrics:
+        exporters:
+        - prometheus
