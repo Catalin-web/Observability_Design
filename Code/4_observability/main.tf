@@ -22,16 +22,16 @@ module "elasticsearch_dashboard" {
   source = "../modules/service_dashboard"
 
   grafana_folder_uid = module.grafana.grafana_folder_uid
-  service_name       = "elasticsearch"
-  dashboard_title    = "Elasticsearch"
+  service_name       = "elasticsearch-master"
+  dashboard_title    = "Elasticsearch Master"
 }
 
 module "prometheus_dashboard" {
   source = "../modules/service_dashboard"
 
   grafana_folder_uid = module.grafana.grafana_folder_uid
-  service_name       = "prometheus"
-  dashboard_title    = "Prometheus"
+  service_name       = "prometheus-server"
+  dashboard_title    = "Prometheus Server"
 }
 
 module "kibana_dashboard" {

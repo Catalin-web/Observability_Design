@@ -5,3 +5,11 @@ admin:
   existingSecret: ${secret_name}
   userKey: ${username_key}
   passwordKey: ${password_key}
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
